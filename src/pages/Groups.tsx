@@ -17,19 +17,12 @@ function Groups() {
   const [group, setGroup] = useState([]);
   const [showFriend, setShowFriend] = useState<number[]>([]);
 
+
   // Hooks
   const { refetch, isLoading, isError, data } = useQuery({
     queryKey: ['todos', friends, color, isClosed],
     queryFn: () => getTodos(friends, color, isClosed),
   });
-
-  const getTodos = async (color: string, isClosed: string, friends: string) => {
-    const res = await fetch(
-      `https://78b9877e282ef0f7.mokky.dev/all?${color}${isClosed}&${friends}`,
-    );
-    const data = await res.json();
-    return data;
-  };
 
   //// Фильтруем группы в случае если выбирается "без друзей"
   useEffect(() => {
@@ -39,6 +32,7 @@ function Groups() {
       setGroup(data);
     }
   }, [data, unFriend]);
+
 
   // Functions
   const handleChangeClosed = (value: string) => {
@@ -100,9 +94,18 @@ function Groups() {
     }
     setShowFriend([...showFriend, id]);
   };
+  const getTodos = async (color: string, isClosed: string, friends: string) => {
+    const res = await fetch(
+      `https://78b9877e282ef0f7.mokky.dev/all?${color}${isClosed}&${friends}`,
+    );
+    const data = await res.json();
+    return data;
+  };
 
+  
   return (
     <>
+      {/* Основной контент */}
       <div className="main">
         <div className="select">
           <SelectComponent
@@ -116,16 +119,18 @@ function Groups() {
           <OneGroup key={item.id} item={item} showFriend={showFriend} showFriends={showFriends} />
         ))}
       </div>
+
+      {/* Skeleton */}
       {isLoading && (
         <div className="zagr2">
           <Skeleton />
-          
-     
         </div>
       )}
 
+      {/* В случае ошибки */}
       {isError || (data?.result === 0 && <div>Произошла ошибка</div>)}
 
+      {/* В случае если нет данных */}
       <div className={!isLoading && group?.length === 0 ? 'zagr' : 'none'}>
         <Empty description={false} />
         <div className="textNot">Ничего не найдено</div>
