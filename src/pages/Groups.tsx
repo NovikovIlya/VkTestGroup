@@ -117,10 +117,10 @@ function Groups() {
         ))}
       </div>
       {isLoading && (
-        <div className="zagr">
+        <div className="zagr2">
           <Skeleton />
-          <Skeleton />
-          <Skeleton />
+          
+     
         </div>
       )}
 

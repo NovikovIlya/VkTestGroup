@@ -1,74 +1,84 @@
-.main{
+.main {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.text{
+.text {
   font-size: 10px;
 }
-.cardd{
+.cardd {
   text-align: start;
-  border:none;
+  border: none;
 }
-.btnPop{
+.btnPop {
   width: 100%;
 }
-.container{
+.container {
   display: flex;
-  border:1px solid #f0f0f0;
+  border: 1px solid #f0f0f0;
   margin: 10px;
   padding: 10px;
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  transition: 0.5s;
 }
-.miniCont{
+.container:hover {
+  transition: 0.5s;
+  scale: 1.01;
+}
+.miniCont {
   display: flex;
   align-items: center;
   z-index: 100;
   position: absolute;
-  top:10px;
+  top: 10px;
   right: 10px;
 }
-.imageBox{
+.imageBox {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  border:1px solid #f0f0f0;
+  border: 1px solid #f0f0f0;
 }
-.select{
+.select {
   margin: 10px;
-  
 }
-.textNot{
+.textNot {
   text-align: center;
   width: 100%;
 }
-.ss{
+.ss {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
-.textName{
-  margin-top: 5px;
+.textName {
+  margin-top: 10px;
 }
-.notFound{
+.notFound {
   margin-top: 20px;
 }
-.zagr{
+.zagr {
   transition: 1.5s;
   opacity: 1;
+
+  gap: 10px;
+  display: grid;
+  margin-top: 50px;
+}
+.zagr2 {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  width: 400px;
-  margin-top: 50px;
+  width: 396px;
+  margin-top: -11px;
 }
 
-.none{
+.none {
   transition: 1.5s;
   opacity: 0;
 }
 
 @media screen and (max-width: 390px) {
-  .sel{
+  .sel {
     display: flex;
     align-items: center;
     justify-content: center;
