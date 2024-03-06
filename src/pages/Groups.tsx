@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import type { CollapseProps } from 'antd';
-import { Select, Space, Card, Collapse, Popover ,Button} from 'antd';
-import  './Group.css'
-import {DownOutlined} from '@ant-design/icons';
+import { Select, Space, Card, Collapse, Popover, Button,Spin ,Empty } from 'antd';
+import './Group.css';
+import { Group, User } from '../types/types';
+import OneGroup from '../components/oneGroup/oneGroup';
+import Skeleton from '../components/skeleton/skeleton';
 
 function Groups() {
   // Data
@@ -13,22 +13,17 @@ function Groups() {
   const [color, setColor] = useState('');
   const [unFriend, setunFriend] = useState(false);
   const [group, setGroup] = useState([]);
-  // const [cat, setCat] = useState();
+  const [showFriend, setShowFriend] = useState<number[]>([]);
 
   // Hooks
-  const { refetch, isPending, isError, data } = useQuery({
+  const { refetch, isPending, isLoading,isError, data } = useQuery({
     queryKey: ['todos', friends, color, isClosed],
     queryFn: () => getTodos(friends, color, isClosed, unFriend),
   });
 
-  const getTodos = async (
-    param: any,
-    color: any,
-    isClosed: any,
-    unFriend: any
-  ) => {
+  const getTodos = async (color: string, isClosed: string, friends: string, unFriend: boolean) => {
     const res = await fetch(
-      `https://78b9877e282ef0f7.mokky.dev/all?${color}${isClosed}&${friends}`
+      `https://78b9877e282ef0f7.mokky.dev/all?${color}${isClosed}&${friends}`,
     );
     const data = await res.json();
 
@@ -39,7 +34,7 @@ function Groups() {
   useEffect(() => {
     // getCats();
     if (unFriend) {
-      setGroup(data.filter((item: any) => !item.friends));
+      setGroup(data.filter((item: Group) => !item.friends));
     } else {
       setGroup(data);
     }
@@ -101,93 +96,78 @@ function Groups() {
       }
     }, 1000);
   };
+  const showFriends = (id: number) => {
+    if (showFriend.includes(id)) {
+      setShowFriend(showFriend.filter((item) => item !== id));
+      return;
+    }
 
-  // const getCats = async () => {
-  //   try {
-  //     const res = await fetch(
-  //       `https://api.thecatapi.com/v1/images/search?limit=15`,
-  //       {
-  //         headers: {
-  //           'x-api-key':
-  //             'live_CcWRuj2DUaa6ga7yc4ES8AzrKPNfrIKIqR4wLxCvlaUDuaDk1SZMi9sXsB24zrPJ',
-  //         },
-  //       }
-  //     );
-  //     const dataCat = await res.json();
-  //     setCat(dataCat);
-  //     console.log(dataCat);
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //   }
-  // };
+    //@ts-ignore
+    setShowFriend([...showFriend, id]);
+  };
 
   return (
     <>
-      <div>
-        <Space wrap>
-          <Select
-            defaultValue="Все группы"
-            style={{ width: 120 }}
-            onChange={handleChangeClosed}
-            options={[
-              { value: '', label: 'Все группы' },
-              { value: 'Закрытая', label: 'Закрытая' },
-              { value: 'Открытая', label: 'Открытая' },
-            ]}
-          />
+      <div className="main">
+        <div className="select">
+          <Space className="sel" wrap>
+            <Select
+              className="ss"
+              defaultValue="Все группы"
+              style={{ width: 120 }}
+              onChange={handleChangeClosed}
+              options={[
+                { value: '', label: 'Все группы' },
+                { value: 'Закрытая', label: 'Закрытая' },
+                { value: 'Открытая', label: 'Открытая' },
+              ]}
+            />
 
-          <Select
-            defaultValue="Все"
-            style={{ width: 120 }}
-            onChange={handleChangeColor}
-            options={[
-              { value: 'Все', label: 'Все цвета' },
-              { value: 'Красный', label: 'Красный' },
-              { value: 'Зеленый', label: 'Зеленый' },
-              { value: 'Желтый', label: 'Желтый' },
-              { value: 'Синий', label: 'Синий' },
-              { value: 'Фиолетовый', label: 'Фиолетовый' },
-              { value: 'Оранжевый', label: 'Оранжевый' },
-            ]}
-          />
-          <Select
-            defaultValue="Все группы"
-            style={{ width: 120 }}
-            onChange={handleChangeFriends}
-            options={[
-              { value: 'Все', label: 'Все группы' },
-              { value: 'Есть друзья', label: 'Есть друзья' },
-              { value: 'Нет друзей', label: 'Нет друзей' },
-            ]}
-          />
-        </Space>
+            <Select
+              className="ss"
+              defaultValue="Все"
+              style={{ width: 120 }}
+              onChange={handleChangeColor}
+              options={[
+                { value: 'Все', label: 'Все цвета' },
+                { value: 'Красный', label: 'Красный' },
+                { value: 'Зеленый', label: 'Зеленый' },
+                { value: 'Желтый', label: 'Желтый' },
+                { value: 'Синий', label: 'Синий' },
+                { value: 'Фиолетовый', label: 'Фиолетовый' },
+                { value: 'Оранжевый', label: 'Оранжевый' },
+              ]}
+            />
+            <Select
+              className="ss"
+              defaultValue="Все группы"
+              style={{ width: 120 }}
+              onChange={handleChangeFriends}
+              options={[
+                { value: 'Все', label: 'Все группы' },
+                { value: 'Есть друзья', label: 'Есть друзья' },
+                { value: 'Нет друзей', label: 'Нет друзей' },
+              ]}
+            />
+          </Space>
+        </div>
 
-        {group?.map((item: any) => (
-          <div key={item.id}>
-            <Card className='cardd' title={item.name} style={{ width: 300 }}>
-              <p>Статус группы: {item.closed ? "Закрытая" : "Открытая"}</p>
-              
-              {item?.friends?.length > 0 && (
-              <Popover content={
-                item?.friends?.map((item) => {
-                  return (
-                    <>
-
-                    <div>
-                      <span className='text'>{item.first_name} {item.last_name}</span>
-                    </div>
-                    </>
-                  );
-                })
-                } title={ <div>Количество друзей: {item?.friends?.length}</div>}>
-                <Button className='btnPop' type="primary">Посмотреть друзей<DownOutlined /></Button>
-              </Popover>
-              )}
-            </Card>
-          </div>
+        {group?.map((item: Group) => (
+          <OneGroup key={item.id} item={item} showFriend={showFriend} showFriends={showFriends} />
         ))}
       </div>
+      {isLoading && <div className='zagr'>
+        {/* <Spin />
+        <div>Загрузка...</div> */}
+        <Skeleton/>
+        <Skeleton/>
+        <Skeleton/>
+      </div>}
+      {isError || (data?.result === 0 && <div>Произошла ошибка</div>)}
+      {data?.length === 0 && <div>
+        <Empty description={false} />
+        <div className='textNot'>Ничего не найдено</div>
+        </div>}
     </>
   );
 }
