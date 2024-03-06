@@ -34,7 +34,7 @@ function Groups() {
   //// Фильтруем группы в случае если выбирается "без друзей"
   useEffect(() => {
     if (unFriend) {
-      setGroup(data.filter((item: Group) => !item.friends));
+      setGroup(data?.filter((item: Group) => !item.friends));
     } else {
       setGroup(data);
     }
@@ -123,13 +123,13 @@ function Groups() {
           <Skeleton />
         </div>
       )}
+
       {isError || (data?.result === 0 && <div>Произошла ошибка</div>)}
-      {data?.length === 0 && (
-        <div>
-          <Empty description={false} />
-          <div className="textNot">Ничего не найдено</div>
-        </div>
-      )}
+
+      <div className={!isLoading && group?.length === 0 ? 'zagr' : 'none'}>
+        <Empty description={false} />
+        <div className="textNot">Ничего не найдено</div>
+      </div>
     </>
   );
 }

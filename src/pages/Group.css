@@ -40,6 +40,7 @@
 }
 .textNot{
   text-align: center;
+  width: 100%;
 }
 .ss{
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -47,12 +48,23 @@
 .textName{
   margin-top: 5px;
 }
+.notFound{
+  margin-top: 20px;
+}
 .zagr{
+  transition: 1.5s;
+  opacity: 1;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
   width: 400px;
+  margin-top: 50px;
+}
+
+.none{
+  transition: 1.5s;
+  opacity: 0;
 }
 
 @media screen and (max-width: 390px) {
