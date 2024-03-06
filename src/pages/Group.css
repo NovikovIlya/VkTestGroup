@@ -19,12 +19,8 @@
   padding: 10px;
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  transition: 0.5s;
 }
-.container:hover {
-  transition: 0.5s;
-  scale: 1.01;
-}
+
 .miniCont {
   display: flex;
   align-items: center;
