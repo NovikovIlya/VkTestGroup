@@ -1,5 +1,5 @@
 import { Select, Space } from 'antd';
-import '../../pages/Group.css';
+import '../../pages/Group/Group.css';
 
 const SelectComponent = ({ handleChangeClosed, handleChangeColor,handleChangeFriends }:any) => {
   return (
