@@ -1,5 +1,4 @@
 import { Button, Card } from 'antd';
-import React from 'react';
 import { User } from '../../types/types';
 
 const oneGroup = ({ item, showFriend, showFriends }:any) => {
